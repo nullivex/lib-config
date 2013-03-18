@@ -20,6 +20,7 @@
  */
 
 //this is not a config file
+ld('/func/mda');
 
 class Config {
 
