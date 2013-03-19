@@ -40,80 +40,13 @@ class Config {
 
 	public static function set($sec,$name,$value=null){
 		if(self::_get()->debug) printf("Config::set(%s,%s,%s)\n",$sec,$name,$value);
-		list($sec,$name) = self::_path(array($sec,$name));
-		if(!isset(self::_get()->config[$sec]))
-			self::_get()->config[$sec]=array();
-		if(strpos($name,'.') !== false){
-			$p = explode('.',$name);
-			switch(count($p)){
-				case 2:
-					if(!isset(self::_get()->config[$sec][$p[0]]))
-						self::_get()->config[$sec][$p[0]]=array();
-					self::_get()->config[$sec][$p[0]][$p[1]] = $value;
-					break;
-				case 3:
-					if(!isset(self::_get()->config[$sec][$p[0]]))
-						self::_get()->config[$sec][$p[0]]=array();
-					if(!isset(self::_get()->config[$sec][$p[0]][$p[1]]))
-						self::_get()->config[$sec][$p[0]][$p[1]]=array();
-					self::_get()->config[$sec][$p[0]][$p[1]][$p[2]] = $value;
-					break;
-				case 4:
-					if(!isset(self::_get()->config[$sec][$p[0]]))
-						self::_get()->config[$sec][$p[0]]=array();
-					if(!isset(self::_get()->config[$sec][$p[0]][$p[1]]))
-						self::_get()->config[$sec][$p[0]][$p[1]]=array();
-					if(!isset(self::_get()->config[$sec][$p[0]][$p[1]][$p[2]]))
-						self::_get()->config[$sec][$p[0]][$p[1]][$p[2]]=array();
-					self::_get()->config[$sec][$p[0]][$p[1]][$p[2]][$p[3]] = $value;
-					break;
-				default:
-					//set up to maxdepth array levels, then put raw dotted leftovers there as a var
-					if(!isset(self::_get()->config[$sec][$p[0]]))
-						self::_get()->config[$sec][$p[0]]=array();
-					if(!isset(self::_get()->config[$sec][$p[0]][$p[1]]))
-						self::_get()->config[$sec][$p[0]][$p[1]]=array();
-					if(!isset(self::_get()->config[$sec][$p[0]][$p[1]][$p[2]]))
-						self::_get()->config[$sec][$p[0]][$p[1]][$p[2]]=array();
-					self::_get()->config[$sec][$p[0]][$p[1]][$p[2]][implode('.',array_slice($p,3))] = $value;
-					break;
-			}
-			unset($p);
-		} else
-			self::_get()->config[$sec][$name] = $value;
+		return mda_set(self::_get()->config,$value,$sec.((strlen($name)!==0)?'.'.$name:''));
 	}
 
-	public static function get($sec,$name=null){
+	public static function get($sec=null,$name=null){
+		if(is_null($sec)) return self::_get()->config;
 		if(self::_get()->debug) printf("Config::get(%s%s)\n",$sec,is_null($name)?'':sprintf(',%s',$name));
-		list($sec,$name) = self::_path(array($sec,$name));
-		if(!isset(self::_get()->config[$sec])) throw new Exception("config: sec does not exist: $sec");
-		if(is_null($name)){
-			return self::_get()->config[$sec];
-		} else {
-			$rv = null;
-			if(!isset(self::_get()->config[$sec][$name]) && (strpos($name,'.') !== false)){
-				$p = explode('.',$name);
-				$rv = null;
-				switch(count($p)){
-					case 4:
-					default:
-						if(is_null($rv) && (isset(self::_get()->config[$sec][$p[0]][$p[1]][$p[2]][implode('.',array_slice($p,3))])))
-							$rv = self::_get()->config[$sec][$p[0]][$p[1]][$p[2]][implode('.',array_slice($p,3))];
-					case 3:
-						if(is_null($rv) && (isset(self::_get()->config[$sec][$p[0]][$p[1]][implode('.',array_slice($p,2))])))
-							$rv = self::_get()->config[$sec][$p[0]][$p[1]][implode('.',array_slice($p,2))];
-					case 2:
-						if(is_null($rv) && (isset(self::_get()->config[$sec][$p[0]][implode('.',array_slice($p,1))])))
-							$rv = self::_get()->config[$sec][$p[0]][implode('.',array_slice($p,1))];
-						break;
-				}
-				unset($p);
-			} else {
-				$rv = mda_get(self::_get()->config[$sec],$name);
-			}
-			if(is_null($rv)) throw new Exception("config: var not found: $sec,$name");
-			return $rv;
-		}
+		return mda_get(self::_get()->config,$sec.(is_null($name)?'':'.'.$name));
 	}
 
 	public static function getMerged($sec,$name=null){
@@ -130,21 +63,6 @@ class Config {
 		}
 		if(is_null($rv)) throw new Exception("config: mergeable var not found: $sec,$name");
 		if(self::_get()->debug) printf("Config::getMerged() complete\n");
-		return $rv;
-	}
-
-	private static function _path($path=''){
-		if(is_array($path)) $path = implode('.',$path);
-		$path = trim($path,'.');
-		$rv = array(0=>$path,1=>null);
-		if(strpos($path,'.') !== false){
-			$p = explode('.',$path);
-			$rv[0] = array_shift($p);
-			$rv[1] = implode('.',$p);
-			unset($p);
-			if(strlen($rv[1]) === 0) $rv[1] = null;
-		}
-		if(self::_get()->debug) printf("Config::_path(%s,%s)\n",$rv[0],$rv[1]);
 		return $rv;
 	}
 
