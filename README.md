@@ -72,14 +72,21 @@ Get a value from the confi structure
 Get a merged value from the config tree
 Consider the following config structure
 ```php
-$config['test1']['sec'] = 1;
-$config['test2']['sec'] = 2;
-$config['test3']['sec'] = 3;
+//full tree
+$config['db']['driver'] = 'mysql';
+$config['admin']['db']['driver'] = 'sqlite3';
 
 Config::setConfig($config);
-$val = Config::getMerged('sec'); //should return 3
+$val = Config::getMerged('admin','db.driver'); //returns 'sqllite'
+
+//shorthand tree
+$config['db']['driver'] = 'mysql';
+
+Config::setConfig($config);
+$val = Config::getMerged('admin','db.driver'); //returns 'mysql'
+
 ```
-The idea is to retrieve a section from an unknown name.
+The idea is to retrieve a section from a subroot and gracefully look upstream.
   * $sec		config section (can be an MDA key) NULL for none
   * $name		config name (can be an MDA key) NULL for none
 
