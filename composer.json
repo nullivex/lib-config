@@ -1,0 +1,30 @@
+{
+	 "name":				"openlss/lib-config"
+	,"homepage":			"http://openlss.org"
+	,"description":			"Configuration access helper and environment manager"
+	,"license":				"LGPLv2"
+	,"type":				"library"
+	,"keywords": [
+		 "configuration"
+		,"config"
+		,"config override"
+		,"system configuration"
+	]
+	,"authors": [
+		 {
+			 "name":		"Bryan Tong"
+			,"email":		"contact@nullivex.com"
+			,"homepage":	"http://bryantong.com"
+		}
+		,{
+			 "name":		"Tony Butler"
+			,"email":		"spudz76@gmail.com"
+			,"homepage":	"http://openlss.org"
+		}
+	]
+	,"require": {
+		 "php":					">=5.3.2"
+		,"openlss/core-boot":	">=0.0.1"
+		,"openlss/func-mda":	">=0.0.1"
+	}
+}

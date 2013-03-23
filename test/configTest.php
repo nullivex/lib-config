@@ -1,5 +1,6 @@
 <?php
-require_once(dirname(__DIR__).'/test_common.php');
+require_once('vendor/autoload.php');
+require('boot.php');
 ld('config');
 
 class ConfigTest extends PHPUNIT_Framework_TestCase {
