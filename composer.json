@@ -24,7 +24,14 @@
 	]
 	,"require": {
 		 "php":					">=5.3.2"
-		,"openlss/core-boot":	">=0.0.1"
 		,"openlss/func-mda":	">=0.0.1"
+	}
+	,"require-dev": {
+		 "openlss/core-boot":	"dev-master"
+	}
+	,"autoload": {
+		"psr-0": {
+			"LSS":	""
+		}
 	}
 }

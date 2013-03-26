@@ -18,13 +18,11 @@
  *	GNU Lesser General Public License along with OpenLSS.
  *	If not, see <http://www.gnu.org/licenses/>.
 */
-namespace LSS;
-
 require_once('vendor/autoload.php');
-require('boot.php');
-ld('config');
+require_once('lss_boot.php');
+use \LSS\Config;
 
-class ConfigTest extends \PHPUNIT_Framework_TestCase {
+class ConfigTest extends PHPUNIT_Framework_TestCase {
 
 	static $test_config = array(
 		'main'=>array(
