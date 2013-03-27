@@ -7,7 +7,6 @@ Usage
 ----
 
 ```php
-ld('config');
 
 //build config
 $config = array();
