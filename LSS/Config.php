@@ -20,6 +20,8 @@
  */
 namespace LSS;
 
+use \Exception;
+
 class Config {
 
 	static $inst = false;
