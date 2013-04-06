@@ -46,6 +46,8 @@ class Config {
 	public static function get($sec=null,$name=null){
 		if(is_null($sec)) return self::_get()->config;
 		if(self::_get()->debug) printf("Config::get(%s%s)\n",$sec,is_null($name)?'':sprintf(',%s',$name));
+		if(!mda_exists(self::_get()->config,$sec,$name))
+			throw new Exception('Config var doesnt exist: '.$sec.'.'.$name);
 		return mda_get(self::_get()->config,$sec,$name);
 	}
 
