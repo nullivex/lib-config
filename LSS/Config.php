@@ -25,7 +25,7 @@ use \Exception;
 class Config {
 
 	static $inst = false;
-	
+
 	public $config = array();
 	public $debug = false;
 
@@ -35,7 +35,7 @@ class Config {
 	}
 
 	public function setConfig($config){
-		$this->config = array_merge($this->config,$config);
+		$this->config = mda_merge($this->config,$config);
 	}
 
 	public function dumpConfig(){
@@ -47,7 +47,7 @@ class Config {
 	}
 
 	public static function setDefaults($config){
-		self::_get()->config = array_merge($config,self::_get()->config);
+		self::_get()->config = mda_merge($config,self::_get()->config);
 	}
 
 	public static function set($sec,$name,$value=null){
