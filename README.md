@@ -54,6 +54,22 @@ Returns the current singleton (will create one if it doesnt exist)
 
 ### (void) setConfig($config)
 Will set the passed array to the main config
+This will merge with the existing config
+
+### (void) resetConfig($config)
+Resets the internal config registry
+
+### (void) dumpConfig($config)
+var_dumps the internal config
+Note: use output buffers to capture this
+
+### (void) setDefaults($config)
+Made to be used by packages will set the passed config below the internal config
+Example:
+```php
+self::_get()->config = array_merge($config,self::_get()->config);
+```
+This allows userspace overrides to remain in affect regardless of registration time.
 
 ### (mixed) set($sec,$name,$value)
 Sets a value in the config
