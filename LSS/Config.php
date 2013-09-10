@@ -55,6 +55,10 @@ class Config {
 		return mda_set(self::_get()->config,$sec,$name,$value);
 	}
 
+	public static function exists($sec,$name){
+		return mda_exists(self::_get()->config,$sec,$name);
+	}
+
 	public static function get($sec=null,$name=null){
 		if(is_null($sec)) return self::_get()->config;
 		if(self::_get()->debug) printf("Config::get(%s%s)\n",$sec,is_null($name)?'':sprintf(',%s',$name));

@@ -68,6 +68,11 @@ class ConfigTest extends PHPUNIT_Framework_TestCase {
 		$this->assertFalse(Config::get('main','test2'));
 	}
 
+	public function testExists(){
+		$this->assertTrue(Config::exists('main','test2'));
+		$this->assertFalse(Config::exists('main','test3'));
+	}
+
 	public function testGetPath(){
 		$this->assertFalse(Config::get('subgroup','subset.b'));
 	}

@@ -78,6 +78,11 @@ Sets a value in the config
   * $value		Value to be set
 Returns the value to be set
 
+### (bool) exists($sec,$name=null)
+Check if a value exists
+  * $sec		config section (can be an MDA key) NULL for none
+  * $name		config name (can be an MDA key) NULL for none
+
 ### (mixed) get($sec=null,$name=null)
 Get a value from the confi structure
   * $sec		config section (can be an MDA key) NULL for none
